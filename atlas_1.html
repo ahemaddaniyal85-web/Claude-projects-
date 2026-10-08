@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ATLAS — Automotive Index</title>
+<meta name="description" content="Explore car brands, models, generations, specifications and parts. Demonstration dataset: figures are unverified.">
+<meta property="og:title" content="ATLAS — Automotive Index"><meta property="og:description" content="Brands, generations, specs, comparison and parts in one interactive index.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>try{var t=JSON.parse(localStorage.getItem('atlas.theme'));t&&(document.documentElement.dataset.theme=t)}catch(e){}</script>
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--bg:#f0eee8;--sf:#e6e3d9;--ln:#cdc8ba;--tx:#0e0f12;--mu:#555860;--ac:#d4340a;--on:#fff;--e:cubic-bezier(.2,.8,.2,1);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a0b0d;--sf:#111317;--ln:#272b32;--tx:#ecebe6;--mu:#9a9ea8;--ac:#ff5a2a;--on:#0a0b0d}}
+:root[data-theme=dark]{--bg:#0a0b0d;--sf:#111317;--ln:#272b32;--tx:#ecebe6;--mu:#9a9ea8;--ac:#ff5a2a;--on:#0a0b0d}
+html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+body{background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}button,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px}
+.d{font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;text-transform:uppercase;font-weight:700;line-height:.92}
+.m,dt,kbd,.b,.ch,header nav a,summary,legend,th{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.m,dt,legend{color:var(--mu)}
+.w{max-width:1240px;margin:auto;padding:0 clamp(16px,4vw,48px)}
+.sec{padding:clamp(48px,8vw,104px) 0}.sf{background:var(--sf);border-block:1px solid var(--ln)}
+.skip{position:absolute;left:-999px}.skip:focus{left:8px;top:8px;z-index:99;background:var(--ac);color:var(--on);padding:8px 12px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#pg{position:fixed;top:0;left:0;right:0;height:2px;background:var(--ac);transform:scaleX(0);transform-origin:left;z-index:60}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);border-bottom:1px solid var(--ln)}
+.nb{display:flex;align-items:center;gap:8px;height:60px}.logo{font-size:1.9rem}.logo i{color:var(--ac);font-style:normal}
+header nav{display:flex;margin:0 auto 0 16px}header nav a{padding:10px 12px;position:relative}
+header nav a[aria-current=page]::after{content:"";position:absolute;left:12px;right:12px;bottom:3px;height:2px;background:var(--ac)}
+sup{color:var(--ac)}
+.ib{background:none;border:1px solid transparent;min-width:40px;height:40px;display:inline-grid;place-items:center;cursor:pointer;font-size:1.05rem;transition:border-color .15s,transform .15s}.ib:hover{border-color:var(--ln)}.ib:active{transform:scale(.92)}.mb{display:none}
+.b{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:13px 20px;border:1px solid var(--tx);background:none;cursor:pointer;transition:transform .15s,background .15s,color .15s}.b:hover{background:var(--tx);color:var(--bg)}.b:active{transform:translateY(1px) scale(.98)}.b.p{background:var(--ac);border-color:var(--ac);color:var(--on)}.b.p:hover{filter:brightness(1.12)}.b.s{padding:8px 12px}.b[aria-pressed=true]{background:var(--tx);color:var(--bg)}
+.ch{padding:8px 12px;border:1px solid var(--ln);background:none;cursor:pointer;display:inline-block;transition:border-color .15s,background .15s}.ch:hover{border-color:var(--tx)}.ch[aria-pressed=true],.ch.on,.ch[aria-current=true]{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.chs{display:flex;flex-wrap:wrap;gap:6px}
+.pn{position:relative;border:1px solid var(--ln);background:var(--bg);padding:clamp(18px,3vw,32px)}.pn::before,.pn::after{content:"";position:absolute;width:14px;height:14px;border:2px solid var(--ac)}.pn::before{top:-1px;left:-1px;border-right:0;border-bottom:0}.pn::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+.hero{position:relative;min-height:calc(100svh - 61px);display:grid;align-items:center;overflow:hidden;border-bottom:1px solid var(--ln);padding:48px 0 0}
+.gr{position:absolute;inset:-6%;background:linear-gradient(var(--ln) 1px,transparent 1px) 0 0/56px 56px,linear-gradient(90deg,var(--ln) 1px,transparent 1px) 0 0/56px 56px;-webkit-mask-image:radial-gradient(ellipse at 62% 58%,#000 8%,transparent 68%);mask-image:radial-gradient(ellipse at 62% 58%,#000 8%,transparent 68%);transform:translate(calc(var(--mx,0)*-14px),calc(var(--my,0)*-14px))}
+.tach{position:absolute;right:4vw;top:46%;width:min(58vw,620px);transform:translateY(-50%);color:var(--mu);opacity:.55}.tk{transform-box:fill-box;transform-origin:center;animation:spin 140s linear infinite}.ga{animation:sw 2.4s .5s var(--e) both}
+.hc{position:relative;z-index:2}.hero h1{font-size:clamp(3.4rem,10.4vw,9.6rem);margin:18px 0 22px}.hero h1 span{display:block;overflow:hidden}.hero h1 b{display:block;font-weight:700;transform:translateY(106%);animation:up .9s var(--e) forwards;animation-delay:calc(var(--i)*90ms + 150ms)}.ol{color:transparent;-webkit-text-stroke:2px var(--ac)}
+.lede{max-width:40ch;color:var(--mu);font-size:1.1rem}.cta{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0}
+.sb{display:flex;align-items:center;justify-content:space-between;gap:12px;width:min(520px,100%);padding:16px 18px;border:1px solid var(--tx);background:var(--bg);cursor:pointer;color:var(--mu);transition:border-color .15s,box-shadow .15s}.sb:hover{border-color:var(--ac);box-shadow:4px 4px 0 var(--ac)}.sb kbd{border:1px solid var(--ln);padding:2px 8px}
+.hv{position:absolute;right:-3vw;bottom:5%;width:min(86vw,940px);pointer-events:none;transform:translate(calc(var(--mx,0)*12px),calc(var(--my,0)*8px));transition:transform .35s ease-out;z-index:1}
+.car{display:block;width:100%;stroke-width:3}.draw{stroke-width:1.8}.hv .car{stroke-width:1.2}
+.draw [pathLength]{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.2s .3s var(--e) forwards}.dm{opacity:0;animation:fade .8s 2.2s forwards}.draw .wh{transform-box:fill-box;transform-origin:center;animation:spin 7s linear infinite}
+@keyframes up{to{transform:none}}@keyframes draw{to{stroke-dashoffset:0}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes fade{to{opacity:1}}@keyframes grow{from{transform:scaleX(0)}}@keyframes sw{from{stroke-dasharray:0 600}}
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s,transform .7s var(--e)}.rv.in{opacity:1;transform:none}
+.sh{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:32px}.sh h1,.sh h2{font-size:clamp(2.6rem,7vw,6rem)}
+.row{display:grid;grid-template-columns:44px 1fr auto auto;gap:16px;align-items:baseline;padding:22px 0;border-top:1px solid var(--ln);position:relative;transition:padding .4s var(--e)}.row .d{font-size:clamp(2.6rem,8vw,6rem);transition:color .15s}.row:hover{padding-left:18px}.row:hover .d{color:var(--ac)}.row::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--ac);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--e)}.row:hover::after{transform:none}
+.eg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(24px,5vw,64px);align-items:start}
+fieldset{border:0;padding:0;margin:0 0 22px;min-width:0}legend{margin-bottom:8px}
+.big{font-size:clamp(2.4rem,5vw,4rem);margin:6px 0 20px}
+.bd{font-family:"IBM Plex Mono",monospace;font-size:.7rem;border:1px solid var(--ac);color:var(--ac);padding:3px 8px;margin-left:10px;vertical-align:middle;letter-spacing:.07em}
+.qs{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));border:1px solid var(--ln);margin-bottom:22px}.qs div{padding:14px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln);margin:0 -1px -1px 0}.qs dd{font:600 1.6rem/1.1 "Barlow Condensed","Arial Narrow",sans-serif;text-transform:uppercase;margin-top:4px}
+.band{background:var(--ac);color:var(--on)}.band .m{color:inherit;opacity:.9}.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:24px}.st .d{font-size:clamp(4rem,10vw,8rem)}
+.tl{display:flex;flex-wrap:wrap;gap:6px 28px;margin:6px 0 40px}.tl a{font:700 clamp(2rem,5.5vw,4.4rem)/1.05 "Barlow Condensed","Arial Narrow",sans-serif;text-transform:uppercase;transition:color .15s}.tl a:hover{color:var(--ac)}.tl sup{font:500 .7rem "IBM Plex Mono",monospace}
+.vi{display:block;position:relative;padding:14px 14px 22px;border:1px solid var(--ln);overflow:hidden}.vi .car{transition:transform .5s var(--e)}.vr:hover .car{transform:translateX(6px) scale(1.03)}.ph{position:absolute;left:10px;bottom:6px;font-size:.58rem}
+.vr{display:grid;grid-template-columns:220px 1fr auto auto;gap:24px;align-items:center;padding:20px 0;border-top:1px solid var(--ln)}.vt h3{font-size:clamp(1.8rem,3.4vw,2.8rem);margin:4px 0}.k{display:flex;gap:22px}.k dd,.sg dd,td{font:500 .88rem "IBM Plex Mono",monospace}.na{color:var(--mu)}.ac{display:flex;flex-direction:column;gap:8px}
+.cg{display:grid;grid-template-columns:250px minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}.fl{position:sticky;top:76px}.dr>summary{list-style:none;cursor:pointer;border:1px solid var(--tx);padding:12px 16px;margin-bottom:16px}
+.bar0{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding-bottom:16px}select{background:var(--bg);border:1px solid var(--ln);padding:6px 8px;font-size:.75rem}
+.bh h1{font-size:clamp(3.6rem,12vw,10rem);margin:8px 0 28px}
+.dh{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:center;margin:20px 0 48px}.dh h1{font-size:clamp(3rem,9vw,8rem)}.gen{font-size:2rem;color:var(--ac);margin:10px 0}.dmo{display:inline-block;border:1px dashed var(--mu);padding:3px 8px;margin:8px 0 0}
+.tm{display:flex;list-style:none;padding:0;margin:20px 0 8px;overflow-x:auto;border-top:2px solid var(--ln)}.tm li{flex:1 0 150px;position:relative;padding-top:20px}.tm li::before{content:"";position:absolute;top:-8px;left:0;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--ln);transition:.4s var(--e)}.tm .on::before{background:var(--ac);border-color:var(--ac);transform:scale(1.35)}.tm a{display:block;padding-right:12px}.tm b{font-size:2.4rem;display:block}
+.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 48px;margin:48px 0}.sg h2{font-size:2rem;margin-bottom:6px}.sg dl div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--ln)}.sg dd{text-align:right}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:600px}th,td{padding:14px 12px;text-align:left;border-bottom:1px solid var(--ln);vertical-align:top}th[scope=row]{position:sticky;left:0;background:var(--bg);color:var(--mu)}tr.df th[scope=row]{box-shadow:inset 3px 0 var(--ac);color:var(--tx)}th .d{font-size:1.7rem;color:var(--tx)}.bar{display:block;height:4px;background:var(--ac);width:var(--w);margin-top:8px;transform-origin:left;animation:grow .9s var(--e) both}
+details.pt{border-top:1px solid var(--ln)}details.pt>summary{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;cursor:pointer;list-style:none}details.pt b{font-size:clamp(1.8rem,4vw,3rem)}.pb{padding:0 0 24px;max-width:70ch;display:grid;gap:12px}
+.empty{padding:56px 0;display:grid;gap:14px;justify-items:start}.empty h1,.empty h2{font-size:3rem}
+.ft{border-top:1px solid var(--ln);color:var(--mu)}.ft p{max-width:70ch;margin-top:12px}
+#tray{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--tx);color:var(--bg);padding:10px 14px;max-width:calc(100% - 24px)}#tray[hidden]{display:none}#tray .m{color:var(--bg)}#tray .b{border-color:var(--bg);color:var(--bg);padding:8px 12px}#tray .b.p{background:var(--ac);border-color:var(--ac);color:var(--on)}
+.ts{position:fixed;left:50%;top:76px;transform:translate(-50%,-8px);opacity:0;background:var(--ac);color:var(--on);padding:10px 16px;z-index:70;transition:all .4s var(--e);pointer-events:none}.ts.on{opacity:1;transform:translate(-50%,0)}
+dialog{border:1px solid var(--tx);background:var(--bg);color:var(--tx);padding:0;width:min(680px,calc(100% - 24px));margin:12vh auto auto}dialog::backdrop{background:rgba(5,6,8,.72)}
+#si{width:100%;padding:20px;font:500 1.05rem "IBM Plex Mono",monospace;background:none;border:0;border-bottom:1px solid var(--ln);color:var(--tx)}#si:focus{outline:0;border-bottom-color:var(--ac)}
+#sl{list-style:none;padding:6px 0;margin:0;max-height:52vh;overflow:auto}#sl li{padding:10px 20px;display:flex;justify-content:space-between;gap:12px;cursor:pointer}#sl li[aria-selected=true]{background:var(--tx);color:var(--bg)}#sl li[aria-selected=true] .m{color:var(--bg);opacity:.75}#sl .gh{cursor:default;padding-top:14px}#sl .empty{cursor:default;padding:28px 20px;display:grid;gap:6px;justify-items:start}
+@media(max-width:899px){.cg,.eg,.dh{grid-template-columns:1fr}.fl{position:static}.vr{grid-template-columns:1fr;gap:14px}.ac{flex-direction:row}.hero{padding:32px 0 0;align-items:start}.hv{position:relative;right:auto;bottom:auto;width:112%;margin:28px -6% 0}.tach{top:34%}}
+@media(max-width:760px){header nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;margin:0;background:var(--bg);border-bottom:1px solid var(--ln)}header nav.open{display:flex}.mb{display:inline-grid}.row{grid-template-columns:32px 1fr auto}.row .h{display:none}.k{gap:14px}}
+@media(min-width:900px){.dr>summary{display:none}}
+@media(prefers-reduced-motion:reduce){*,::before,::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#">Skip to content</a><div id="pg"></div>
+<header><div class="w nb"><a class="logo d" href="#/" aria-label="ATLAS home">ATLAS<i>.</i></a>
+<nav id="nv" aria-label="Primary"><a href="#/brands">Brands</a><a href="#/cars">Cars</a><a href="#/compare">Compare<sup id="cc"></sup></a><a href="#/parts">Parts</a></nav>
+<button class="ib" data-search aria-label="Search (press /)">⌕</button><button class="ib" id="th" aria-label="Toggle light or dark theme">◐</button><a class="ib" href="#/cars?fav=1" aria-label="Saved vehicles">♥<sup id="fc"></sup></a><button class="ib mb" id="mb" aria-expanded="false" aria-controls="nv" aria-label="Menu">≡</button></div></header>
+<main id="main" tabindex="-1"></main>
+<footer class="ft sec"><div class="w"><span class="d logo" style="color:var(--tx)">ATLAS<i>.</i></span><p>Demonstration dataset: figures are illustrative, unverified and may vary by market, model year and configuration. Extend the BR, V and P arrays to add brands, vehicles and parts; replace them with a fetch() to an API or CMS when ready.</p></div></footer>
+<div id="tray" hidden></div><div id="ts" class="ts" role="status"></div>
+<dialog id="sd" aria-label="Search"><input id="si" role="combobox" aria-expanded="true" aria-controls="sl" aria-autocomplete="list" aria-label="Search" placeholder="Search brands, models, engines, parts…" autocomplete="off"><ul id="sl" role="listbox"></ul><p class="m" style="padding:10px 20px;border-top:1px solid var(--ln)">↑↓ navigate · ↵ open · esc close</p></dialog>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={g(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches,main=$('#main');
+
+/* Schema — BR: brands · V: one record per generation (v = variants [name, PS, Nm]) · P: parts. Missing value = not in dataset. DEMO DATA, unverified. */
+const BR=[{id:'bmw',n:'BMW',c:'Germany',f:1916,h:'Munich'},{id:'mb',n:'Mercedes-Benz',c:'Germany',f:1926,h:'Stuttgart'},{id:'vw',n:'Volkswagen',c:'Germany',f:1937,h:'Wolfsburg'},{id:'lam',n:'Lamborghini',c:'Italy',f:1963,h:"Sant'Agata Bolognese"},{id:'por',n:'Porsche',c:'Germany',f:1931,h:'Stuttgart'}];
+const V=[
+{id:'bmw-m3-e30',b:'bmw',m:'M3',g:'E30',y:[1986,1991],body:'Coupe',en:'2.3 L inline-4',cyl:4,a:'NA',f:'ICE',d:'RWD',tx:'5-speed manual'},
+{id:'bmw-m3-e46',b:'bmw',m:'M3',g:'E46',y:[2000,2006],body:'Coupe',en:'3.2 L inline-6',cyl:6,a:'NA',f:'ICE',d:'RWD',tx:'6-speed manual / SMG II'},
+{id:'bmw-m3-e92',b:'bmw',m:'M3',g:'E90/E92/E93',y:[2007,2013],body:'Coupe',en:'4.0 L V8',cyl:8,a:'NA',f:'ICE',d:'RWD',tx:'6-speed manual / 7-speed DCT'},
+{id:'bmw-m3-g80',b:'bmw',m:'M3',g:'G80',y:[2021,null],body:'Sedan',en:'3.0 L twin-turbo inline-6',cyl:6,a:'Turbo',f:'ICE',d:'RWD / AWD',tx:'6-speed manual / 8-speed automatic',ps:510,nm:650,v:[['M3',480,550],['M3 Competition',510,650],['M3 Competition xDrive',510,650]]},
+{id:'mb-c63-w204',b:'mb',m:'AMG C 63',g:'W204',y:[2008,2014],body:'Sedan',en:'6.2 L V8',cyl:8,a:'NA',f:'ICE',d:'RWD',tx:'7-speed AMG SPEEDSHIFT MCT'},
+{id:'mb-c63-w206',b:'mb',m:'AMG C 63',s:'S E Performance',g:'W206',y:[2023,null],body:'Sedan',en:'2.0 L turbo inline-4 + plug-in hybrid',cyl:4,a:'Turbo',f:'Hybrid',d:'AWD',tx:'9-speed AMG SPEEDSHIFT MCT',ps:680,nm:1020,t:3.4},
+{id:'mb-300sl-w198',b:'mb',m:'300 SL',g:'W198',y:[1954,1957],body:'Coupe',en:'3.0 L inline-6',cyl:6,a:'NA',f:'ICE',d:'RWD',tx:'4-speed manual',ps:215},
+{id:'vw-gti-mk1',b:'vw',m:'Golf GTI',g:'Mk1',y:[1976,1983],body:'Hatchback',en:'1.6 L inline-4 (1.8 L later)',cyl:4,a:'NA',f:'ICE',d:'FWD',tx:'4/5-speed manual',ps:110},
+{id:'vw-gti-mk8',b:'vw',m:'Golf GTI',g:'Mk8',y:[2020,null],body:'Hatchback',en:'2.0 L turbo inline-4',cyl:4,a:'Turbo',f:'ICE',d:'FWD',tx:'6-speed manual / 7-speed DSG',ps:245,nm:370},
+{id:'vw-id3',b:'vw',m:'ID.3',g:'Gen 1',y:[2020,null],body:'Hatchback',en:'Rear electric motor',cyl:null,a:null,f:'EV',d:'RWD',tx:'Single-speed'},
+{id:'lam-countach-lp400',b:'lam',m:'Countach',g:'LP400',y:[1974,1978],body:'Coupe',en:'3.9 L V12',cyl:12,a:'NA',f:'ICE',d:'RWD',tx:'5-speed manual'},
+{id:'lam-huracan-evo',b:'lam',m:'Huracán',g:'EVO',y:[2019,2022],body:'Coupe',en:'5.2 L V10',cyl:10,a:'NA',f:'ICE',d:'AWD',tx:'7-speed dual-clutch',ps:640,nm:600,t:2.9},
+{id:'lam-urus',b:'lam',m:'Urus',g:'Gen 1',y:[2018,2022],body:'SUV',en:'4.0 L twin-turbo V8',cyl:8,a:'Turbo',f:'ICE',d:'AWD',tx:'8-speed automatic',ps:650,nm:850,t:3.6},
+{id:'lam-revuelto',b:'lam',m:'Revuelto',g:'Gen 1',y:[2023,null],body:'Coupe',en:'6.5 L V12 + 3 electric motors',cyl:12,a:'NA',f:'Hybrid',d:'AWD',tx:'8-speed dual-clutch',ps:1015,t:2.5},
+{id:'por-911-993',b:'por',m:'911',s:'Carrera',g:'993',y:[1993,1998],body:'Coupe',en:'3.6 L air-cooled flat-6',cyl:6,a:'NA',f:'ICE',d:'RWD / AWD',tx:'6-speed manual / Tiptronic'},
+{id:'por-911-gt3-992',b:'por',m:'911',s:'GT3',g:'992',y:[2021,null],body:'Coupe',en:'4.0 L flat-6',cyl:6,a:'NA',f:'ICE',d:'RWD',tx:'7-speed PDK / 6-speed manual',ps:510,nm:470,t:3.4}];
+const P=[
+{n:'Turbocharger',c:'Engine',f:'An exhaust-driven turbine spins a compressor that forces extra air into the engine, raising output from a given displacement.',s:['Intake','Exhaust','Lubrication'],q:['a','Turbo']},
+{n:'Pistons',c:'Engine',f:'Slide in the cylinders and turn combustion pressure into linear motion delivered to the crankshaft.',s:['Combustion','Lubrication']},
+{n:'Crankshaft',c:'Engine',f:'Converts the pistons’ reciprocating motion into rotation that feeds the transmission.',s:['Drivetrain','Balance']},
+{n:'Radiator',c:'Cooling',f:'Moves engine heat from the coolant into passing air to hold operating temperature in range.',s:['Cooling']},
+{n:'Water pump',c:'Cooling',f:'Circulates coolant through the block, heater core and radiator.',s:['Cooling']},
+{n:'Brake discs',c:'Braking',f:'Rotors clamped by the pads; friction turns kinetic energy into heat to slow the car.',s:['Braking','Wheels']},
+{n:'Brake calipers',c:'Braking',f:'Hold the pistons that press the pads against the disc when hydraulic pressure is applied.',s:['Braking','Hydraulics']},
+{n:'Clutch',c:'Transmission',f:'Couples and decouples engine torque from the gearbox so the car can pull away and change gear.',s:['Drivetrain'],q:['tx','manual']},
+{n:'Differential',c:'Transmission',f:'Splits torque between the wheels of an axle so they can turn at different speeds in corners.',s:['Drivetrain']},
+{n:'Shock absorbers',c:'Suspension',f:'Damp spring oscillation to keep the tyres on the road and control body motion.',s:['Suspension','Wheels']},
+{n:'ECU',c:'Electrical',f:'Reads engine sensors and manages fuelling, ignition and boost.',s:['Electronics','Engine management']},
+{n:'High-voltage battery',c:'Electrical',f:'Stores the energy that drives the electric motors in hybrid and electric vehicles.',s:['Electrification'],q:['f','Hybrid|EV']}];
+const TECH=[['Turbocharged','a=Turbo'],['Hybrid','f=Hybrid'],['Electric','f=EV'],['V8','cyl=8'],['V12','cyl=12'],['All-wheel drive','d=AWD']];
+const PRE=[['bmw-m3-g80,mb-c63-w206','BMW M3 vs AMG C 63'],['por-911-993,por-911-gt3-992','911: 993 vs 992'],['lam-huracan-evo,lam-revuelto','Huracán vs Revuelto']];
+const disp=v=>{const m=/^([\d.]+) L/.exec(v.en||'');return m?+m[1]:null};
+const yr=v=>v.y[0]+'–'+(v.y[1]||'present'),isCl=v=>(v.y[1]||9999)<2000;
+const SP=[['Engine',[['Configuration',v=>v.en],['Displacement',v=>disp(v)&&disp(v)+' L'],['Cylinders',v=>v.cyl],['Aspiration',v=>v.a],['Fuel type',v=>v.f]]],
+['Performance',[['Power',v=>v.ps&&v.ps+' PS'],['Torque',v=>v.nm&&v.nm+' Nm'],['0–100 km/h',v=>v.t&&v.t+' s'],['Top speed',()=>null]]],
+['Drivetrain',[['Drive',v=>v.d],['Transmission',v=>v.tx]]],
+['Body & dimensions',[['Body type',v=>v.body],['Production',yr],['Length',()=>null],['Curb weight',()=>null]]]];
+const RW=[['Body',v=>v.body],['Production',yr],['Engine',v=>v.en],['Displacement (L)',disp,1],['Cylinders',v=>v.cyl],['Aspiration',v=>v.a],['Fuel type',v=>v.f],['Power (PS)',v=>v.ps,1],['Torque (Nm)',v=>v.nm,1],['0–100 km/h (s)',v=>v.t],['Drivetrain',v=>v.d],['Transmission',v=>v.tx]];
+
+const B=id=>BR.find(b=>b.id===id),VV=id=>V.find(v=>v.id===id);
+const ttl=v=>v.m+(v.s?' '+v.s:''),nm=v=>B(v.b).n+' '+ttl(v)+' '+v.g;
+const cv=(v,i)=>v.v&&v.v[i]?{...v,ps:v.v[i][1],nm:v.v[i][2]}:v;
+const NA='<span class="na" title="Not in demo dataset">—</span>',fm=(x,u='')=>x==null?NA:esc(x)+u;
+const T=s=>document.title=s+' — ATLAS',slug=n=>n.toLowerCase().replace(/\W+/g,'-');
+const qs=o=>{const p=new URLSearchParams(o).toString();return p?'?'+p:''};
+const go=h=>location.hash===h?route():location.hash=h;
+const lab=(k,v)=>k==='b'?(B(v)?.n||v):k==='cyl'?v+' cylinders':k==='fav'?'Saved only':v;
+let favs=ls.g('atlas.fav',[]).filter(VV),cmp=ls.g('atlas.cmp',[]).filter(VV),rec=ls.g('atlas.rec',[]);
+const M={b:(v,x)=>v.b===x,body:(v,x)=>v.body===x,f:(v,x)=>v.f===x,a:(v,x)=>v.a===x,d:(v,x)=>v.d.includes(x),cyl:(v,x)=>String(v.cyl)===x,era:(v,x)=>(x==='Classic')===isCl(v),fav:v=>favs.includes(v.id)};
+const flt=q=>V.filter(v=>Object.keys(M).every(k=>!q[k]||M[k](v,q[k])));
+
+const CP='M14 90V76C14 70 22 66 40 64L90 58C110 40 140 30 178 28H232C262 30 284 44 304 58L362 64C378 66 388 74 388 84V90H350A24 24 0 0 0 302 90H108A24 24 0 0 0 60 90Z';
+const wheel=x=>`<g class="wh"><circle cx="${x}" cy="90" r="19" pathLength="1"/><path d="M${x} 72V108M${x-18} 90H${x+18}M${x-13} 77L${x+13} 103M${x+13} 77L${x-13} 103"/></g>`;
+const svgCar=h=>`<svg class="car${h?' draw':''}" viewBox="0 0 400 130" fill="none" stroke="currentColor" stroke-linejoin="round" role="img" aria-label="Generic illustrative car profile, not a specific model"><path pathLength="1" d="${CP}"/><path pathLength="1" d="M98 58C114 42 142 34 178 34H226C250 36 268 46 284 58Z"/><path pathLength="1" opacity=".5" d="M40 64H362"/>${wheel(84)}${wheel(326)}${h?`<g class="dm" stroke="var(--ac)"><path d="M84 112V124M326 112V124M84 118H326M396 28V90M392 28H400M392 90H400"/><text x="205" y="127" fill="var(--ac)" stroke="none" font-size="6" text-anchor="middle" font-family="IBM Plex Mono,monospace" letter-spacing=".5">WHEELBASE · ILLUSTRATIVE</text></g>`:''}</svg>`;
+const TACH='<svg class="tach" viewBox="0 0 200 200" fill="none" aria-hidden="true"><circle class="tk" cx="100" cy="100" r="94" stroke="currentColor" stroke-width="5" stroke-dasharray="1 7.4"/><circle class="ga" cx="100" cy="100" r="82" stroke="var(--ac)" stroke-width="3" stroke-dasharray="330 600" transform="rotate(135 100 100)"/></svg>';
+
+const fav=id=>`<button class="b s" data-fav="${id}" aria-pressed="false">♡ Save</button>`,cp=id=>`<button class="b s" data-cmp="${id}" aria-pressed="false">+ Compare</button>`;
+const nf=m=>{T('Not found');return `<section class="w sec empty"><p class="m">404</p><h1 class="d">${esc(m)}</h1><p>That route or record doesn't exist in this demo.</p><a class="b p" href="#/">Back to start</a></section>`};
+const vRow=v=>`<article class="vr rv"><a class="vi" href="#/car/${v.id}" aria-label="${esc(nm(v))}">${svgCar()}<span class="m ph">Placeholder</span></a><div class="vt"><span class="m">${B(v.b).n} · ${yr(v)}</span><h3 class="d"><a href="#/car/${v.id}">${esc(ttl(v))}</a><small class="bd">${esc(v.g)}</small></h3><p class="m">${esc(v.en)} · ${v.body}</p></div><dl class="k">${[['Power',fm(v.ps,' PS')],['0–100',fm(v.t,' s')],['Drive',fm(v.d)]].map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl><div class="ac">${fav(v.id)}${cp(v.id)}</div></article>`;
+const bRows=()=>BR.map((b,i)=>`<a class="row rv" href="#/cars?b=${b.id}"><span class="m">0${i+1}</span><span class="d">${b.n}</span><span class="m h">${b.c} · est. ${b.f} · ${esc(b.h)}</span><span class="m">${V.filter(v=>v.b===b.id).length} gen. →</span></a>`).join('');
+
+const vBrands=()=>{T('Brands');return `<section class="w sec"><div class="sh"><h1 class="d">Brands</h1><p class="m">Demo dataset · ${BR.length} marques</p></div>${bRows()}</section>`};
+const vHome=()=>{T('Explore automotive engineering');const mods=new Set(V.map(v=>v.b+v.m)).size,tc=q=>flt(Object.fromEntries(new URLSearchParams(q))).length;
+return `<section class="hero" id="hero"><div class="gr" aria-hidden="true"></div>${TACH}<div class="w hc"><p class="m">ATLAS · Automotive Index · Demo dataset</p><h1 class="d"><span><b style="--i:0">Explore the</b></span><span><b style="--i:1">world of</b></span><span><b style="--i:2">automotive</b></span><span><b style="--i:3" class="ol">engineering.</b></span></h1><p class="lede">Discover vehicles, specifications, engineering, technology and components from legendary manufacturers.</p><div class="cta"><a class="b p" href="#/cars">Explore cars →</a><a class="b" href="#/compare">Compare vehicles</a></div><button class="sb" data-search><span>Search brands, models, engines, parts…</span><kbd>/</kbd></button></div><div class="hv" aria-hidden="true">${svgCar(1)}</div></section>
+<section class="w sec" id="brands"><div class="sh"><span class="m">01 / Marques</span><h2 class="d">Every marque.<br>One index.</h2></div>${bRows()}</section>
+<section class="sec sf"><div class="w"><div class="sh"><span class="m">02 / Explorer</span><h2 class="d">Brand → Model →<br>Generation → Variant</h2></div><div class="eg"><div id="exc"></div><div id="exr" aria-live="polite"></div></div></div></section>
+<section class="sec band"><div class="w st">${[['Brands',BR.length],['Models',mods],['Generations',V.length],['Parts',P.length]].map(([l,n])=>`<div><div class="d cnt" data-to="${n}">${n}</div><p class="m">${l}</p></div>`).join('')}</div><p class="w m" style="margin-top:28px">Counts of this demonstration dataset, not a complete database.</p></section>
+<section class="w sec"><div class="sh"><span class="m">03 / Technology</span><h2 class="d">Filter by what<br>is under it</h2></div><div class="tl">${TECH.map(([n,q])=>`<a class="rv" href="#/cars?${q}">${n}<sup>${tc(q)}</sup></a>`).join('')}</div><span class="m">Popular comparisons</span><div class="tl">${PRE.map(([ids,l])=>`<a class="rv" href="#/compare" data-pre="${ids}">${l} →</a>`).join('')}</div><a class="b p" href="#/parts">Explore parts →</a></section>`};
+
+function vCars(q){
+ const FG=[['b','Brand',BR.map(x=>[x.id,x.n])],['body','Body',[...new Set(V.map(x=>x.body))].map(x=>[x,x])],['f','Fuel',['ICE','Hybrid','EV'].map(x=>[x,x])],['a','Aspiration',[['NA','Naturally aspirated'],['Turbo','Turbo']]],['d','Drivetrain',['RWD','AWD','FWD'].map(x=>[x,x])],['era','Era',[['Classic','Classic (pre-2000)'],['Modern','Modern']]]];
+ const r=flt(q),so=q.s||'new',act=Object.keys(M).filter(k=>q[k]),br=q.b&&B(q.b);
+ r.sort(so==='power'?(a,c)=>(c.ps||0)-(a.ps||0):so==='name'?(a,c)=>nm(a).localeCompare(nm(c)):(a,c)=>c.y[0]-a.y[0]);
+ T(br?br.n:q.fav?'Saved':'Cars');
+ return `<section class="w sec">${br?`<div class="bh"><span class="m">Brand · ${br.c} · est. ${br.f} · HQ ${esc(br.h)}</span><h1 class="d">${br.n}</h1></div>`:`<div class="sh"><h1 class="d">${q.fav?'Saved':'Cars'}</h1></div>`}
+<div class="cg"><details class="dr"${innerWidth>=900?' open':''}><summary>Filters${act.length?` (${act.length})`:''}</summary><div class="fl">${FG.map(([k,l,it])=>`<fieldset><legend>${l}</legend><div class="chs">${it.map(([v,t])=>`<button class="ch" data-f="${k}" data-v="${esc(v)}" aria-pressed="${q[k]===v}">${esc(t)}</button>`).join('')}</div></fieldset>`).join('')}</div></details>
+<div><div class="bar0"><p class="m" aria-live="polite">${r.length} vehicle${r.length===1?'':'s'}</p><div class="chs">${act.map(k=>`<button class="ch on" data-f="${k}" data-v="${esc(q[k])}" aria-label="Remove filter ${esc(lab(k,q[k]))}">${esc(lab(k,q[k]))} ✕</button>`).join('')}${act.length?'<a class="ch" href="#/cars">Clear all</a>':''}</div><label class="m">Sort <select id="so">${[['new','Newest'],['power','Power'],['name','Name']].map(([v,t])=>`<option value="${v}"${so===v?' selected':''}>${t}</option>`).join('')}</select></label></div>
+${r.length?r.map(vRow).join(''):`<div class="empty"><h2 class="d">No vehicles match</h2><p>Loosen a filter or start again.</p><a class="b p" href="#/cars">Clear all filters</a></div>`}</div></div></section>`}
+
+function vCar(id,q){
+ const base=VV(id);if(!base)return nf('Vehicle not found');
+ const vi=+q.v||0,v=cv(base,vi),b=B(v.b),sib=V.filter(x=>x.b===v.b&&x.m===v.m).sort((a,c)=>a.y[0]-c.y[0]),oth=[...new Set(V.filter(x=>x.b===v.b&&x.m!==v.m).map(x=>x.m))];
+ T(nm(base));
+ return `<article class="w sec"><p class="m"><a href="#/brands">Brands</a> / <a href="#/cars?b=${b.id}">${b.n}</a> / ${esc(v.m)} / ${esc(v.g)}</p>
+<div class="dh"><div><h1 class="d">${esc(ttl(v))}</h1><p class="d gen">${esc(v.g)} <span class="m">${yr(v)}</span></p><p class="m">${esc(v.en)} · ${v.body}</p><span class="m dmo">Demo data · unverified</span><div class="cta">${fav(v.id)}${cp(v.id)}</div></div><div class="pn"><div class="vi">${svgCar(1)}<span class="m ph">Placeholder illustration, no licensed photo</span></div></div></div>
+${base.v?`<fieldset><legend>Variant</legend><div class="chs">${base.v.map((x,i)=>`<a class="ch" href="#/car/${base.id}${qs(i?{v:i}:{})}"${i===vi?' aria-current="true"':''}>${esc(x[0])}</a>`).join('')}</div></fieldset>`:''}
+<dl class="qs">${[['Power',fm(v.ps,' PS')],['Torque',fm(v.nm,' Nm')],['0–100 km/h',fm(v.t,' s')],['Drive',fm(v.d)],['Gearbox',fm(v.tx)],['Engine',fm(v.en)]].map(([a,c])=>`<div><dt>${a}</dt><dd>${c}</dd></div>`).join('')}</dl>
+<h2 class="d" style="font-size:2.4rem">Generations</h2><ol class="tm">${sib.map(x=>`<li class="${x.id===v.id?'on':''}"><a href="#/car/${x.id}"${x.id===v.id?' aria-current="true"':''}><span class="m">${yr(x)}</span><b class="d">${esc(x.g)}</b></a></li>`).join('')}</ol><p class="m">Demo dataset lists selected generations only.</p>
+<div class="sg">${SP.map(([g,rows])=>`<div><h2 class="d">${g}</h2><dl>${rows.map(([l,f])=>`<div><dt>${l}</dt><dd>${fm(f(v))}</dd></div>`).join('')}</dl></div>`).join('')}</div>
+${oth.length?`<p class="m">Also from ${b.n}</p><div class="chs">${oth.map(m=>{const l=V.filter(x=>x.b===v.b&&x.m===m).sort((a,c)=>c.y[0]-a.y[0])[0];return `<a class="ch" href="#/car/${l.id}">${esc(m)}</a>`}).join('')}</div>`:''}
+<p class="m" style="margin-top:32px">Specifications may vary by market, model year and configuration. Demonstration data, not verified against manufacturer sources. “—” means not in the dataset.</p></article>`}
+
+function vCmp(){
+ T('Compare');const L=cmp.map(VV).filter(Boolean);
+ const pre=`<div class="tl">${PRE.map(([ids,l])=>`<a href="#/compare" data-pre="${ids}">${l} →</a>`).join('')}</div>`;
+ if(L.length<2)return `<section class="w sec"><div class="sh"><h1 class="d">Compare</h1></div><div class="empty"><h2 class="d">Pick 2–4 vehicles</h2><p>Use “+ Compare” on any vehicle, or start from a popular comparison.</p>${pre}<a class="b p" href="#/cars">Browse cars</a></div></section>`;
+ const rows=RW.map(([l,f,bar])=>{const vals=L.map(f),df=new Set(vals.map(x=>String(x??'—'))).size>1,mx=bar?Math.max(0,...vals.filter(x=>x!=null)):0;
+  return `<tr class="${df?'df':''}"><th scope="row">${l}</th>${vals.map(x=>`<td>${fm(x)}${bar&&x!=null&&mx?`<i class="bar" style="--w:${x/mx*100}%"></i>`:''}</td>`).join('')}</tr>`}).join('');
+ return `<section class="w sec"><div class="sh"><h1 class="d">Compare</h1><p class="m">Highlighted rows differ · no ranking implied</p></div><div class="sc"><table><thead><tr><th><span class="sr">Specification</span></th>${L.map(v=>`<th scope="col"><span class="m">${B(v.b).n}</span><br><a class="d" href="#/car/${v.id}">${esc(ttl(v))}</a> <span class="m">${esc(v.g)}</span> <button class="ib" data-rm="${v.id}" aria-label="Remove ${esc(nm(v))}">✕</button></th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div><p class="m" style="margin-top:20px">Demonstration data. Price, weight, top speed and range are not in the dataset yet.</p></section>`}
+
+function vParts(q){
+ T('Parts');const cats=[...new Set(P.map(p=>p.c))];
+ return `<section class="w sec"><div class="sh"><h1 class="d">Parts</h1><p class="m">Core systems · ${P.length} parts in the demo</p></div><div class="chs" role="group" aria-label="Part categories"><a class="ch" href="#/parts"${!q.c?' aria-current="true"':''}>All</a>${cats.map(c=>`<a class="ch" href="#/parts?c=${c}"${q.c===c?' aria-current="true"':''}>${c}</a>`).join('')}</div><div style="margin-top:28px">${P.filter(p=>!q.c||p.c===q.c).map(p=>{const rl=p.q?V.filter(v=>new RegExp(p.q[1],'i').test(v[p.q[0]]||'')):[];return `<details class="pt rv"${q.p===slug(p.n)?' open':''}><summary><b class="d">${p.n}</b><span class="m">${p.c}</span></summary><div class="pb"><p>${p.f}</p><p class="m">Related systems: ${p.s.join(' · ')}</p>${p.q?`<p class="m">Found in demo vehicles</p><div class="chs">${rl.map(v=>`<a class="ch" href="#/car/${v.id}">${esc(nm(v))}</a>`).join('')}</div>`:'<p class="m">Applies to most vehicles</p>'}</div></details>`}).join('')}</div></section>`}
+
+let ex={b:'bmw',m:null,g:null,v:0};
+function exDraw(){
+ const ms=[...new Set(V.filter(v=>v.b===ex.b).map(v=>v.m))];if(!ms.includes(ex.m))ex.m=ms[0];
+ const gs=V.filter(v=>v.b===ex.b&&v.m===ex.m).sort((a,c)=>a.y[0]-c.y[0]);let cur=gs.find(v=>v.id===ex.g);if(!cur){cur=gs[gs.length-1];ex.g=cur.id}
+ const vs=cur.v||[];if(!vs[ex.v])ex.v=0;const sv=cv(cur,ex.v);
+ const grp=(k,l,items)=>`<fieldset><legend>${l}</legend><div class="chs">${items.map(([val,t])=>`<button class="ch" data-ex="${k}" data-val="${esc(val)}" aria-pressed="${String(ex[k])===String(val)}">${esc(t)}</button>`).join('')||'<span class="m">No variants in demo data</span>'}</div></fieldset>`;
+ $('#exc').innerHTML=grp('b','1 · Brand',BR.map(x=>[x.id,x.n]))+grp('m','2 · Model',ms.map(x=>[x,x]))+grp('g','3 · Generation',gs.map(x=>[x.id,x.g]))+grp('v','4 · Variant',vs.map((x,i)=>[i,x[0]]));
+ $('#exr').innerHTML=`<div class="pn"><div class="vi">${svgCar()}<span class="m ph">Placeholder</span></div><p class="m" style="margin-top:20px">${B(sv.b).n} · ${esc(sv.g)} · ${yr(sv)}</p><h3 class="d big">${esc(ttl(sv))}${vs[ex.v]?`<small class="bd">${esc(vs[ex.v][0])}</small>`:''}</h3><dl class="qs">${[['Power',fm(sv.ps,' PS')],['Torque',fm(sv.nm,' Nm')],['0–100',fm(sv.t,' s')],['Drive',fm(sv.d)],['Engine',fm(sv.en)],['Gearbox',fm(sv.tx)]].map(([a,c])=>`<div><dt>${a}</dt><dd>${c}</dd></div>`).join('')}</dl><a class="b p" href="#/car/${sv.id}${qs(ex.v?{v:ex.v}:{})}">Full specification →</a></div>`}
+
+/* Search */
+const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),sd=$('#sd'),si=$('#si'),sl=$('#sl'),O=['Brand','Car','Part','Tech'];
+const IDX=[...BR.map(b=>({t:'Brand',l:b.n,s:b.c,h:'#/cars?b='+b.id,k:b.c})),...V.map(v=>({t:'Car',l:nm(v),s:v.en,h:'#/car/'+v.id,k:[v.m.replace(/\s/g,''),v.en,v.body,v.a,v.f,v.d,v.tx].join(' ')})),...P.map(p=>({t:'Part',l:p.n,s:p.c,h:`#/parts?c=${p.c}&p=${slug(p.n)}`,k:p.c})),...TECH.map(([n,q])=>({t:'Tech',l:n,s:'Filter vehicles',h:'#/cars?'+q,k:''}))].map(i=>({...i,k:norm(i.l+' '+i.k)}));
+const find=q=>{const t=norm(q).split(/\s+/).filter(Boolean);return IDX.filter(i=>t.every(x=>i.k.includes(x))).sort((a,b)=>O.indexOf(a.t)-O.indexOf(b.t)||(norm(b.l).startsWith(t[0])-norm(a.l).startsWith(t[0]))).slice(0,14)};
+let sel=0,items=[];
+function sdraw(){const q=si.value.trim();items=q?find(q):[...rec.map(l=>({t:'Recent',l,q:l})),...['BMW M3','V8','turbo','Revuelto'].map(l=>({t:'Try',l,q:l}))];sel=Math.min(sel,Math.max(items.length-1,0));let g='';
+ sl.innerHTML=items.length?items.map((it,i)=>{const hd=it.t!==g?`<li class="gh m" role="presentation">${g=it.t}</li>`:'';return hd+`<li role="option" id="o${i}" data-i="${i}" aria-selected="${i===sel}"><span>${esc(it.l)}</span><span class="m">${esc(it.s||'')}</span></li>`}).join(''):`<li class="empty" role="presentation"><b class="d">No results</b><span>for “${esc(q)}”. Try “BMW M3”, “V8” or “turbo”.</span></li>`;
+ si.setAttribute('aria-activedescendant',items.length?'o'+sel:'')}
+function pick(i){const it=items[i];if(!it)return;if(it.q!=null){si.value=it.q;sel=0;sdraw();return}rec=[it.l,...rec.filter(x=>x!==it.l)].slice(0,4);ls.s('atlas.rec',rec);sd.close();go(it.h)}
+const openS=()=>{if(!sd.open)sd.showModal();si.value='';sel=0;sdraw();si.focus()};
+si.oninput=()=>{sel=0;sdraw()};
+si.onkeydown=e=>{if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(!items.length)return;sel=(sel+(e.key==='ArrowDown'?1:-1)+items.length)%items.length;sdraw();$('#o'+sel)?.scrollIntoView({block:'nearest'})}else if(e.key==='Enter'){e.preventDefault();pick(sel)}};
+sl.onclick=e=>{const li=e.target.closest('[data-i]');li&&pick(+li.dataset.i)};
+sd.onclick=e=>{if(e.target===sd)sd.close()};
+
+/* State, motion, routing */
+const ts=$('#ts');let tt;const toast=s=>{ts.textContent=s;ts.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>ts.classList.remove('on'),2200)};
+function sync(){
+ $$('[data-fav]').forEach(b=>{const on=favs.includes(b.dataset.fav);b.setAttribute('aria-pressed',on);b.textContent=on?'♥ Saved':'♡ Save'});
+ $$('[data-cmp]').forEach(b=>{const on=cmp.includes(b.dataset.cmp);b.setAttribute('aria-pressed',on);b.textContent=on?'✓ Added':'+ Compare'});
+ $('#fc').textContent=favs.length||'';$('#cc').textContent=cmp.length||'';
+ const t=$('#tray');t.hidden=!cmp.length;t.innerHTML=cmp.length?`<span class="m">Compare ${cmp.length}/4</span>${cmp.map(id=>`<span class="m">${esc(nm(VV(id)))}</span>`).join('')}<a class="b p" href="#/compare">View</a><button class="b" data-clr>Clear</button>`:''}
+function count(el){const to=+el.dataset.to;let s=null;const f=t=>{s??=t;const p=Math.min((t-s)/900,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));p<1&&requestAnimationFrame(f)};requestAnimationFrame(f)}
+const io='IntersectionObserver'in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(e.target.dataset.to)count(e.target);io.unobserve(e.target)}}),{threshold:.12}):null;
+function heroFx(){if(RM)return;const h=$('#hero');let f;h.addEventListener('pointermove',e=>{cancelAnimationFrame(f);f=requestAnimationFrame(()=>{h.style.setProperty('--mx',(e.clientX/innerWidth-.5)*2);h.style.setProperty('--my',(e.clientY/innerHeight-.5)*2)})})}
+let last,fx=null;
+function route(){
+ const h=location.hash.slice(1)||'/',[p,s]=h.split('?'),q=Object.fromEntries(new URLSearchParams(s||'')),[,r='',a='']=p.split('/');
+ const map={'':vHome,brands:vBrands,cars:vCars,compare:vCmp,parts:vParts};
+ main.innerHTML=r==='car'?vCar(decodeURIComponent(a),q):map[r]?map[r](q):nf('Page not found');
+ if(p!==last)scrollTo(0,0);last=p;
+ $$('header nav a').forEach(x=>x.getAttribute('href')==='#/'+(r==='car'?'cars':r)?x.setAttribute('aria-current','page'):x.removeAttribute('aria-current'));
+ $('#nv').classList.remove('open');$('#mb').setAttribute('aria-expanded','false');
+ if($('#exc'))exDraw();if($('#hero'))heroFx();
+ $$('.rv,.cnt').forEach(el=>{if(io&&!RM)io.observe(el);else el.classList.add('in')});
+ sync();if(fx){$(fx)?.focus();fx=null}}
+const qNow=()=>Object.fromEntries(new URLSearchParams(location.hash.split('?')[1]||''));
+const save=()=>{ls.s('atlas.cmp',cmp);sync()};
+document.addEventListener('click',e=>{
+ const t=e.target.closest('button,a');if(!t)return;const d=t.dataset;
+ if(t.classList.contains('skip')){e.preventDefault();return main.focus()}
+ if(t.id==='mb'){const o=$('#nv').classList.toggle('open');return t.setAttribute('aria-expanded',o)}
+ if('search'in d)return openS();
+ if(d.fav){favs=favs.includes(d.fav)?favs.filter(x=>x!==d.fav):[...favs,d.fav];ls.s('atlas.fav',favs);return sync()}
+ if(d.cmp){if(cmp.includes(d.cmp))cmp=cmp.filter(x=>x!==d.cmp);else if(cmp.length>=4)return toast('Compare up to 4 vehicles');else cmp=[...cmp,d.cmp];return save()}
+ if(d.rm){cmp=cmp.filter(x=>x!==d.rm);save();return route()}
+ if('clr'in d){cmp=[];save();return route()}
+ if(d.pre){e.preventDefault();cmp=d.pre.split(',');save();return go('#/compare')}
+ if(d.f){const q=qNow();q[d.f]===d.v?delete q[d.f]:q[d.f]=d.v;fx=`[data-f="${d.f}"][data-v="${d.v}"]`;return go('#/cars'+qs(q))}
+ if(d.ex){const k=d.ex;ex[k]=k==='v'?+d.val:d.val;if(k==='b')ex.m=ex.g=null;if(k==='m')ex.g=null;if(k!=='v')ex.v=0;exDraw();$(`#exc [data-ex="${k}"][data-val="${d.val}"]`)?.focus()}});
+document.addEventListener('change',e=>{if(e.target.id==='so'){const q=qNow();q.s=e.target.value;go('#/cars'+qs(q))}});
+addEventListener('keydown',e=>{if((e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))||((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k')){e.preventDefault();openS()}});
+$('#th').onclick=()=>{const r=document.documentElement,c=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),n=c==='dark'?'light':'dark';r.dataset.theme=n;ls.s('atlas.theme',n)};
+const pg=$('#pg');addEventListener('scroll',()=>{pg.style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`},{passive:true});
+addEventListener('hashchange',route);route();
+</script>
+</body>
+</html>
